@@ -18,6 +18,7 @@ KEEP_PROB = 0.5
 MAX_GRAD_NORM = 5
 
 # 这是一条测试语句
+# 再加一条测试语句
 input_data = tf.placeholder(tf.int32, [TRAIN_BATCH_SIZE, TRAIN_NUM_STEP])
 embedding = tf.get_variable("embedding", [VOCAB_SIZE, HIDDEN_SIZE])
 
