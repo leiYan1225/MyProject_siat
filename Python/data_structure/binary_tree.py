@@ -9,21 +9,21 @@ class Node:
         self.left = left
         self.right = right
 
-def preTraverse(root):
+def preTraverse(root): # 前序
     if  root == None:
         return
     print(root.value)
     preTraverse(root.left)
     preTraverse(root.right)
 
-def midTraverse(root):
+def midTraverse(root): # 中序
     if root ==None:
         return
     midTraverse(root.left)
     print(root.value)
     midTraverse(root.right)
 
-def afterTraverse(root):
+def afterTraverse(root): # 后序
     if root ==None:
         return
     afterTraverse(root.left)
@@ -35,10 +35,7 @@ if __name__ == '__main__':
         root = Node('D', Node('B', Node('A'), Node('C')), Node('E', right=Node('G', Node('F'))))
         print('前序遍历：')
         preTraverse(root)
-        print('\n')
         print('中序遍历：')
         midTraverse(root)
-        print('\n')
         print('后序遍历：')
         afterTraverse(root)
-        print('\n')
