@@ -1,0 +1,10 @@
+    record_size = 30  # 1 for scaler and n for vector (represent a line or the whole metro system)
+    num_steps = 12*6 # an hour
+    # Classical NN hyper-parameter
+    learning_rate = 0.002  # Small for Adam optimizer
+    batch_size = 25 # since the data is small
+    max_grad_norm = 5
+    hidden_size = 200
+    keep_prob = 1
+    num_layers = 4
+    max_max_epoch = 50

@@ -1,0 +1,9 @@
+same as 1st
+with the order of following commmands switched 
+       loss = tf.reduce_mean(tf.abs(tf.subtract(pred, targets)))
+        
+        pred = pred  input_.sd_ + input_.mean_
+        targets = targets  input_.sd_ + input_.mean_
+
+
+对标准化后而不是标准化前的数据计算gradient

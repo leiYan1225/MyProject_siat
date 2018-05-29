@@ -1,0 +1,6 @@
+Progress: 0.944 ; Time spent: 3.615 ; MAE: 32.484; Percen_Dev: inf 
+ last target: -0.0541827
+Train Epoch: 3 
+ MEAN: mae: 32.985; PD: inf ; length: 18
+Progress: 0.000 ; Time spent: 0.015 ; MAE: 41.173; Percen_Dev: inf; 
+ first input: -0.0541827

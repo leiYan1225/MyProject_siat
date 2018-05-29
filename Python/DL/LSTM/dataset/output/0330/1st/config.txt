@@ -1,0 +1,33 @@
+
+class TuningConfig(object):
+    # Domain specific hyper-paramter
+    record_size = 1  # 1 for scaler and n for vector (represent a line or the whole metro system)
+    num_steps = 12 * 18  # 2 hours
+    # Classical NN hyper-parameter
+    learning_rate = 0.001  # Small for Adam optimizer
+    batch_size = 50 # Not too small
+    max_grad_norm = 5
+    hidden_size = 200
+    keep_prob = 1
+    num_layers = 1
+    init_scale = 0.1
+    max_max_epoch = 50
+
+"""Configuation Specification"""
+config = TuningConfig()
+eval_config = TuningConfig()
+eval_config.batch_size = 1
+eval_config.num_steps = 1
+
+string_ = "0330/1st"
+print_every_num = 20
+dev_set_len = 12 * 18 * 7
+
+# Training logs is stored in 客流预测实验记录 on zuoyebuluo
+
+"""Data Loading"""
+train_data, dev_df = BTInput.flow_data_reader(data_path = "2017_5min.csv",
+                                              start_date="2017-01-01 00:00:00",
+                                              end_date="2017-12-31 23:55:00",
+                                              num_days_train = 180,
+                                              num_days_dev = 7)# 18 hours per day and 30 days per month => a month

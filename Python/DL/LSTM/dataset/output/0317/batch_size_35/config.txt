@@ -1,0 +1,27 @@
+class SmallConfig(object):
+    # Domain specific hyper-paramter
+    record_size = 1  # 1 for scaler and n for vector (represent a line or the whole metro system)
+    num_steps = 12 * 18 # 1 day: 60/5=12 per hour; 18 running hours per day
+    # Classical NN hyper-parameter
+    learning_rate = 0.001  # Small b'coz Adam optimizer
+    batch_size = 35 
+    max_grad_norm = 5
+    hidden_size = 200
+    keep_prob = 1.0
+    num_layers = 1 # small network first
+    init_scale = 0.1
+    max_max_epoch = 100
+
+
+"""Configuation Specification"""
+config = SmallConfig()
+eval_config = SmallConfig()
+eval_config.batch_size = 1
+
+config.max_max_epoch = 100
+config.num_steps = 12*18
+eval_config.num_steps = 12 * 18
+
+string_ = "0317/batch_size_35"
+print_every_num = 10
+dev_set_len = 12 * 18

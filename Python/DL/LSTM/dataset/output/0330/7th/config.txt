@@ -1,0 +1,25 @@
+GRU
+
+class TuningConfig(object):
+    # Domain specific hyper-paramter
+    record_size = 1  # 1 for scaler and n for vector (represent a line or the whole metro system)
+    num_steps = 12 * 18  # 2 hours
+    # Classical NN hyper-parameter
+    learning_rate = 0.01  # Small for Adam optimizer
+    batch_size = 50 # Not too small
+    max_grad_norm = 5
+    hidden_size = 200
+    keep_prob = 1
+    num_layers = 1
+    init_scale = 0.1
+    max_max_epoch = 40
+
+"""Configuation Specification"""
+config = TuningConfig()
+eval_config = TuningConfig()
+eval_config.batch_size = 1
+eval_config.num_steps = 1
+
+string_ = "0330/7th"
+print_every_num = 10
+dev_set_len = 12 * 18 * 7
