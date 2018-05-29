@@ -3,10 +3,6 @@
 Created on 2017Äê2ÔÂ19ÈÕ
 
 '''
-'''
-ÊäÈëÓÃ
-'''
-
 
 import pandas as pd
 import numpy as np
@@ -58,7 +54,6 @@ biases={
         }
 
 
-
 #¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¶¨ÒåÉñ¾­ÍøÂç±äÁ¿¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
 def lstm(batch):      #²ÎÊý£ºÊäÈëÍøÂçÅú´ÎÊýÄ¿
     w_in=weights['in']
@@ -75,7 +70,6 @@ def lstm(batch):      #²ÎÊý£ºÊäÈëÍøÂçÅú´ÎÊýÄ¿
     b_out=biases['out']
     pred=tf.matmul(output,w_out)+b_out
     return pred,final_states
-
 
 
 #¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ªÑµÁ·Ä£ÐÍ¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
@@ -105,7 +99,6 @@ def train_lstm():
 
 
 # train_lstm()
-
 
 #¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ªÔ¤²âÄ£ÐÍ¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
 def prediction():
