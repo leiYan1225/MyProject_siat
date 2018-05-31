@@ -10,16 +10,16 @@ import matplotlib.pyplot as plt
 import tensorflow as tf
 
 #——————————————————导入数据——————————————————————
-f=open('datasets\KL_in_shijiezhichuang.csv')
-df=pd.read_csv(f,engine="python")     #读入客流数据
-data=np.array(df['in-flow'])   #获取进站数据
-data = data[15:4278]
+f=open('datasets\dataset_1_slice100.csv')
+df=pd.read_csv(f,engine="python")     #读入股票数据
+data=np.array(df['in-flow'])   #获取最高价序列
+data=data[::-1]      #反转，使数据按照日期先后顺序排列
 #以折线图展示data
 plt.figure()
 plt.plot(data)
 plt.show()
-normalize_data=(data-np.mean(data))/np.std(data)  #标准化, 三天数据 shape(661)
-normalize_data=normalize_data[:,np.newaxis]       #增加维度, shape(661,1) 变成一个二维的数组
+normalize_data=(data-np.mean(data))/np.std(data)  #标准化,shape(99)
+normalize_data=normalize_data[:,np.newaxis]       #增加维度, shape(99,1) 变成一个二维的数组
 
 
 #生成训练集
@@ -83,7 +83,7 @@ def train_lstm():
     with tf.Session() as sess:
         sess.run(tf.global_variables_initializer())
         #重复训练10000次
-        for i in range(100):
+        for i in range(200):
             step=0
             start=0
             end=start+batch_size
@@ -113,7 +113,7 @@ def prediction():
         prev_seq=train_x[-1]
         predict=[]
         #得到之后100个预测结果
-        for i in range(300):
+        for i in range(100):
             next_seq=sess.run(pred,feed_dict={X:[prev_seq]})
             predict.append(next_seq[-1])
             #每次得到最后一个时间步的预测结果，与之前的数据加在一起，形成新的测试样本
@@ -123,6 +123,6 @@ def prediction():
         plt.plot(list(range(len(normalize_data))), normalize_data, color='b')
         plt.plot(list(range(len(normalize_data), len(normalize_data) + len(predict))), predict, color='r') # 前面list内是横坐标
         plt.show()
-        # print(predict)
+        print(predict)
 
-prediction()
+# prediction()
