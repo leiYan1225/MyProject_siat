@@ -83,7 +83,7 @@ def train_lstm():
     with tf.Session() as sess:
         sess.run(tf.global_variables_initializer())
         #重复训练10000次
-        for i in range(10000):
+        for i in range(200):
             step=0
             start=0
             end=start+batch_size
@@ -106,7 +106,7 @@ def prediction():
     saver=tf.train.Saver(tf.global_variables())
     with tf.Session() as sess:
         #参数恢复
-        module_file = tf.train.latest_checkpoint(base_path+'module2/')
+        module_file = tf.train.latest_checkpoint('save/')
         saver.restore(sess, module_file)
 
         #取训练集最后一行为测试样本。shape=[1,time_step,input_size]
@@ -121,7 +121,8 @@ def prediction():
         #以折线图表示结果
         plt.figure()
         plt.plot(list(range(len(normalize_data))), normalize_data, color='b')
-        plt.plot(list(range(len(normalize_data), len(normalize_data) + len(predict))), predict, color='r')
+        plt.plot(list(range(len(normalize_data), len(normalize_data) + len(predict))), predict, color='r') # 前面list内是横坐标
         plt.show()
+        print(predict)
 
-# prediction()
+prediction()
