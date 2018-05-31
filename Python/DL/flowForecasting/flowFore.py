@@ -118,11 +118,12 @@ def prediction():
             predict.append(next_seq[-1])
             #每次得到最后一个时间步的预测结果，与之前的数据加在一起，形成新的测试样本
             prev_seq=np.vstack((prev_seq[1:],next_seq[-1]))
+
         #以折线图表示结果
         plt.figure()
         plt.plot(list(range(len(normalize_data))), normalize_data, color='b')
         plt.plot(list(range(len(normalize_data), len(normalize_data) + len(predict))), predict, color='r') # 前面list内是横坐标
         plt.show()
-        # print(predict)
+        print(prev_seq)
 
 prediction()

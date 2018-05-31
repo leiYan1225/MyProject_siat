@@ -20,7 +20,7 @@ def getCommentsById(city, start, end):  # city为字符串，year为列表，mon
         req = request.urlopen(opener).read()
         soup = bs(req, 'html.parser')
         weather_m = soup.select('div .tqtongji2 > ul')  # .表示class; ‘#tongji’表示id等价于a[id='tongji']
-
+        print(weather_m)
         for i in weather_m[1:]:  # 因为第一个为表头，所以筛除掉
             tt = []
             for j in range(6):
@@ -52,4 +52,4 @@ def list_to_excel(weather_result, filename):
 
 if __name__ == '__main__':
     data = getCommentsById('shenzhen', '2017-01', '2017-12')
-    list_to_excel(data, '深圳天气201701-201712')
+    # list_to_excel(data, '深圳天气201701-201712')
