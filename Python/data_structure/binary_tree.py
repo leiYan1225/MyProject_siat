@@ -1,6 +1,18 @@
 
-# 参考博客  https://www.cnblogs.com/freeman818/p/7252041.html
-# 实现二叉树遍历
+'''
+参考博客  https://www.cnblogs.com/freeman818/p/7252041.html
+实现二叉树遍历
+
+例子：
+	     D
+	    / \
+	   B   E
+	  / \   \
+	 A   C   G
+	        /
+	       F
+'''
+
 
 class Node:
     def __init__(self,value = None,left = None, right = None):
