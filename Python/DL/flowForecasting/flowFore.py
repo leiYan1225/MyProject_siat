@@ -1,6 +1,6 @@
 #coding=gbk
 '''
-Created on 2017年2月19日
+Created on 2018年5月01日
 
 '''
 
@@ -13,18 +13,18 @@ import tensorflow as tf
 f=open('datasets\KL_in_shijiezhichuang.csv')
 df=pd.read_csv(f,engine="python")     #读入客流数据
 data=np.array(df['in-flow'])   #获取进站数据
-data = data[15:4278]
+data = data[15:4278] # 3个月
 #以折线图展示data
-plt.figure()
-plt.plot(data)
-plt.show()
-normalize_data=(data-np.mean(data))/np.std(data)  #标准化, 三天数据 shape(661)
-normalize_data=normalize_data[:,np.newaxis]       #增加维度, shape(661,1) 变成一个二维的数组
+# plt.figure()
+# plt.plot(data)
+# plt.show()
+normalize_data=(data-np.mean(data))/np.std(data)  #标准化 shape(4263)
+normalize_data=normalize_data[:,np.newaxis]       #增加维度, shape(4263,1) 变成一个二维的数组
 
 
 #生成训练集
 #设置常量
-time_step=20      #时间步
+time_step=500      #时间步
 rnn_unit=10       #hidden layer units
 batch_size=60     #每一批次训练多少个样例
 input_size=1      #输入层维度
@@ -38,7 +38,9 @@ for i in range(len(normalize_data)-time_step-1):
     train_y.append(y.tolist())
 
 
-print(np.shape(train_x),np.shape(train_y))
+print(train_x)
+print(np.shape(train_x))
+# print(np.shape(train_x),np.shape(train_y))
 
 #——————————————————定义神经网络变量——————————————————
 X=tf.placeholder(tf.float32, [None,time_step,input_size])    #每批次输入网络的tensor, None表示不定
@@ -59,8 +61,8 @@ def lstm(batch):      #参数：输入网络批次数目
     w_in=weights['in']
     b_in=biases['in']
     input=tf.reshape(X,[-1,input_size])  #需要将tensor转成2维进行计算，计算后的结果作为隐藏层的输入
-    print(tf.shape(input))
     input_rnn=tf.matmul(input,w_in)+b_in
+    print(tf.shape(input_rnn))
     input_rnn=tf.reshape(input_rnn,[-1,time_step,rnn_unit])  #将tensor转成3维，作为lstm cell的输入
     cell=tf.nn.rnn_cell.BasicLSTMCell(rnn_unit)
     init_state=cell.zero_state(batch,dtype=tf.float32)
