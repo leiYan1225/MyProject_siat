@@ -102,3 +102,23 @@ if len(arr2)>10: # 只给前10名发
 print(len(arr2))
 for i in arr2:
     print(i)
+
+
+import sys
+
+num = int(sys.stdin.readline().strip('\n'))
+users = []
+while num < 10:
+    users.append(sys.stdin.readline().strip('\n'))
+    if len(users) > num - 1:
+        break
+
+print('-----------')
+new_users = []
+for id in users:
+    if id not in new_users:
+        new_users.append(id)
+
+print(len(new_users))
+for id in new_users:
+    print(id)

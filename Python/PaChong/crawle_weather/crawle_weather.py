@@ -52,4 +52,4 @@ def list_to_excel(weather_result, filename):
 
 if __name__ == '__main__':
     data = getCommentsById('shenzhen', '2017-01', '2017-12')
-    # list_to_excel(data, '深圳天气201701-201712')
+    list_to_excel(data, '深圳天气201701-201712')

@@ -38,9 +38,7 @@ for i in range(len(normalize_data)-time_step-1):
     train_y.append(y.tolist())
 
 
-print(train_x)
 print(np.shape(train_x))
-# print(np.shape(train_x),np.shape(train_y))
 
 #！！！！！！！！！！！！！！！！！！協吶舞将利大延楚！！！！！！！！！！！！！！！！！！
 X=tf.placeholder(tf.float32, [None,time_step,input_size])    #耽答肝補秘利大議tensor, None燕幣音協
@@ -85,7 +83,7 @@ def train_lstm():
     with tf.Session() as sess:
         sess.run(tf.global_variables_initializer())
         #嶷鹸儺膳10000肝
-        for i in range(100):
+        for i in range(10000):
             step=0
             start=0
             end=start+batch_size
@@ -100,7 +98,7 @@ def train_lstm():
                 step+=1
 
 
-# train_lstm()
+train_lstm()
 
 #！！！！！！！！！！！！！！！！圓霞庁侏！！！！！！！！！！！！！！！！！！！！
 def prediction():

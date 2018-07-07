@@ -5,33 +5,34 @@ import numpy as np
 import matplotlib.pyplot as plt
 import tensorflow as tf
 
-time_step = 600  # 时间步 （大概三天）
+time_step = 192  # 时间步 （一天的数据量为192）
 rnn_unit = 30  # hidden layer units
 batch_size = 60  # 每一批次训练多少个样例
 input_size = 1  # 输入层维度
 output_size = 1  # 输出层维度
 lr = 0.0006  # 学习率
-FLAG = 'test'
+FLAG = 'test'  # train or test
 
 # ——————————————————导入数据——————————————————————
-f=open('datasets\KL_in_shijiezhichuang.csv')
-df=pd.read_csv(f,engine="python")     #读入客流数据
-data=np.array(df['in-flow'])   #获取进站数据
-data = data[15:4278] # 3个月
+f=open('E:\\datasets\\stationFlow\\sjzc0607_workday')
+df=pd.read_csv(f,header=None,names=['time','name','inflow','outflow'])     #读入客流数据
+data=np.array(df['inflow'])   #获取进站数据
 normalize_data = (data - np.mean(data)) / np.std(data)  # 标准化
 normalize_data = normalize_data[:, np.newaxis]  # 增加维度
 
 data_x, data_y = [], []
 for i in range(len(normalize_data) - time_step - 1):
     x = normalize_data[i:i + time_step]
-    y = normalize_data[i + time_step]  # 用前三天预测下一个5min,短期预测
+    y = normalize_data[i + time_step]  # 用一天预测下一个5min
     data_x.append(x.tolist())
     data_y.append(y.tolist())
 data_y = np.reshape(data_y, (-1, 1, 1))
 # 分训练集和测试集
-train_num = 4000
+train_num = 6000
 train_x = data_x[0:train_num]
 train_y = data_y[0:train_num]
+# test_x = data_x[1000:2000]
+# test_y = data_y[1000:2000]
 test_x = data_x[train_num:]
 test_y = data_y[train_num:]
 
@@ -86,7 +87,7 @@ def train_lstm():
             start += batch_size
             end = start + batch_size
             print(i, loss_)
-            if i % 30 == 0:
+            if i % 100 == 0:
                 print("保存模型：", saver.save(sess, './savemodel_1/bitcoin.ckpt'))
             if end < len(train_x):
                 start = 0
@@ -108,6 +109,14 @@ def prediction():
         test_pred = sess.run(pred, feed_dict={X: test_x})
         test_pred = np.reshape(test_pred, (-1))
         test_y = np.reshape(test_y, (-1))
+
+        # --计算正确率
+        test_pred = test_pred*np.std(data)+np.mean(data)
+        test_y = test_y*np.std(data)+np.mean(data)
+        print(test_pred)
+        print(test_y)
+        mape = sum(abs(test_pred-test_y)/test_y)/len(test_y)
+        print(mape)
         # 以折线图表示结果
         plt.figure()
         plt.plot(range(len(test_y)), test_y, 'r-', label='real')
