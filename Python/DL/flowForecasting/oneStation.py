@@ -17,6 +17,10 @@ FLAG = 'test'  # train or test
 f=open('E:\\datasets\\stationFlow\\sjzc0607_workday')
 df=pd.read_csv(f,header=None,names=['time','name','inflow','outflow'])     #读入客流数据
 data=np.array(df['inflow'])   #获取进站数据
+plt.plot(data)
+plt.show()
+
+
 normalize_data = (data - np.mean(data)) / np.std(data)  # 标准化
 normalize_data = normalize_data[:, np.newaxis]  # 增加维度
 
@@ -89,7 +93,7 @@ def train_lstm():
             print(i, loss_)
             if i % 100 == 0:
                 print("保存模型：", saver.save(sess, './savemodel_1/bitcoin.ckpt'))
-            if end < len(train_x):
+            if end >= len(train_x):
                 start = 0
                 end = start + batch_size
 
@@ -113,17 +117,34 @@ def prediction():
         # --计算正确率
         test_pred = test_pred*np.std(data)+np.mean(data)
         test_y = test_y*np.std(data)+np.mean(data)
-        print(test_pred)
-        print(test_y)
-        mape = sum(abs(test_pred-test_y)/test_y)/len(test_y)
+        # print(test_pred)
+        # print(test_y)
+
+        # Mean Square Error
+        print("均方误差(MSE)：")
+        mse = np.mean(np.square((test_pred- test_y)))
+        print(mse)
+        # Mean Absolute Error
+        print("平均绝对误差(MAE):")
+        mae = np.mean(np.abs(test_pred - test_y))
+        print(mae)
+        # Root Mean Square Error
+        print("均方根误差(RMSE):")
+        rmse = np.sqrt(np.mean(np.square(test_pred-test_y)))
+        print(rmse)
+        # mean absolute percentage error
+        print("相对百分误差(MAPE):")
+        mape = np.mean(np.abs(test_pred - test_y)/test_y)
         print(mape)
+
+
         # 以折线图表示结果
         plt.figure()
         plt.plot(range(len(test_y)), test_y, 'r-', label='real')
         plt.plot(range(len(test_pred)), (test_pred), 'b-', label='pred')
         plt.legend(loc=0)
         plt.title('prediction')
-        plt.show()
+        plt.savefig('prediction.jpg', dpi=1000, bbox_inches='tight')
 
 
 if __name__ == '__main__':

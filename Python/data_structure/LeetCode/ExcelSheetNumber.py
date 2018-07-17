@@ -11,7 +11,7 @@
 输出: 701
 '''
 
-
+#
 class Solution(object):
     def titleToNumber(self, s):
         if not s: return None
@@ -19,3 +19,5 @@ class Solution(object):
         for c in s:
             num = ((num * 26) + ord(c) - 64)
         return num
+
+

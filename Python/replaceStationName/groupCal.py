@@ -7,34 +7,13 @@ from operator import itemgetter
 from itertools import groupby
 from numpy import mean, ptp, var, std,max
 
-def percent01(a):
-    return  np.percentile(a,95)#95%分位数
-def calTimeDiff(path,lst,num):
-    with open(path,"r",encoding='gbk', errors='ignore')  as f:
-        for line in f:
-            num = num+1
-            if num > 1:
-                s_line = line.split(',')
-                number = s_line[0]
-                first_time = s_line[2]
-                last_time = s_line[12]
-                last_time = time.mktime(time.strptime(last_time,"%Y-%m-%d %H:%M:%S\n"))
-                first_time = time.mktime(time.strptime(first_time,"%Y_%m_%d_%H_%M_%S"))
-                xL.append(num-2)
-                lst.append(last_time-first_time)
 
-        return lst
 
 def calTime(time1,time2):
     first_time = time.mktime(time.strptime(time1, "%Y_%m_%d_%H_%M_%S"))
     last_time = time.mktime(time.strptime(time2, "%Y-%m-%d %H:%M:%S"))
     return (last_time-first_time)
 
-def cal_std(df):
-  for ix,row in df.iterrows():
-    std = row.std()
-    df.loc[ix,"std"] = std
-  return df
 
 
 
