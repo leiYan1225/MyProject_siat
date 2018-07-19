@@ -117,7 +117,7 @@ from datetime import datetime
 # df2.to_csv("E:\\datasets\\stationFlow\\sjzc07",header = 0,encoding = 'utf-8')
 
 
-# -----------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------------------------------------------------
 ##  过滤需要的记录---new
 
 
@@ -139,26 +139,26 @@ from datetime import datetime
 # df.to_csv("E:\\datasets\\stationFlow\\midResult",header=0,index=0,encoding='utf-8')
 
 #---------------------------------------------------------
-# df = pd.read_csv('E:\\datasets\\stationFlow\\midResult',names=['time','name','inflow','outflow','year','month','day','hour','weekday'])
-#
-# ## 过滤2017年的
-# df = df[(df['year'] ==2017)]
-#
-#
-# # 工作日与休息日,分别用0，1表示
-# isrest = ((df['weekday'] == 6) | (df['weekday'] == 7)) # 返回bool值
-# df['label'] = isrest*1
-#
-# # label=2表示节假日
-# # holiday = [] #['06-01']
-# # for h in holiday:
-# #     #h = '01-01'
-# #     h_month,h_day = h.split('-')
-# #     h_index = ((df['month'] == int(h_month)) & (df['day'] == int(h_day)))
-# #     df.loc[h_index, 'label'] = 2
-#
-# ## 过滤6、7月份工作日
-# df = df[(((df['month']==6) | (df['month']==7)) & (df['label']==0))]
+df = pd.read_csv('E:\\datasets\\stationFlow\\midResult',names=['time','name','inflow','outflow','year','month','day','hour','weekday'])
+
+## 过滤2017年的
+df = df[(df['year'] ==2017)]
+
+
+# 工作日与休息日,分别用0，1表示
+isrest = ((df['weekday'] == 6) | (df['weekday'] == 7)) # 返回bool值
+df['label'] = isrest*1
+
+# label=2表示节假日
+# holiday = [] #['06-01']
+# for h in holiday:
+#     #h = '01-01'
+#     h_month,h_day = h.split('-')
+#     h_index = ((df['month'] == int(h_month)) & (df['day'] == int(h_day)))
+#     df.loc[h_index, 'label'] = 2
+
+## 过滤6、7月份工作日
+df = df[(((df['month']==6) | (df['month']==7)) & (df['label']==0))]
 #
 #
 # ##站点
@@ -168,41 +168,41 @@ from datetime import datetime
 # ## 线路
 # # 提取线路需要先将date转化成相同的区间
 # #读取静态数据
-# staticPath = 'E:\\datasets\\stationFlow\\subway_zdbm_station_new'
-# df1 = pd.read_csv(staticPath,names=['stationID','stationName','lineID','lineName','lat','lon'],encoding='utf-8')
-#
-# line =df1[df1['lineName'] =='地铁一号线']
-# line = line.sort_values(by='stationID')
-# name = np.array(line['stationName'])
-#
-# sta0 = df[df['name'] == name[0]].iloc[:,[0,2]]
+staticPath = 'E:\\datasets\\stationFlow\\subway_zdbm_station_new'
+df1 = pd.read_csv(staticPath,names=['stationID','stationName','lineID','lineName','lat','lon'],encoding='utf-8')
+
+line =df1[df1['lineName'] =='地铁一号线']
+line = line.sort_values(by='stationID')
+name = np.array(line['stationName'])
+print(len(name))
+
+sta0 = df[df['name'] == name[0]].iloc[:,[0,2]]
 # sta1 = df[df['name'] == name[1]].iloc[:,2]
-# # sta2 = df[df['name'] == name[2]].iloc[:,[0,2]]
-# # sta0 = pd.merge(sta0,sta2,how='inner',on='time')
-# # sta0 = pd.concat([sta0,sta1],axis=1,ignore_index=True)
-# sta0 = sta0.join(sta1,on='time')
-# for i in range(1,len(name)):
-#     sta1 = df[df['name'] == name[i]].iloc[:,[0,2]]
-#     sta0 = pd.merge(sta0,sta1,how='inner',on='time')
-#
+# sta2 = df[df['name'] == name[2]].iloc[:,[0,2]]
+# sta0 = pd.merge(sta0,sta2,how='inner',on='time')
+
+for i in range(1,len(name)):
+    sta1 = df[df['name'] == name[i]].iloc[:,[0,2]]
+    sta0 = pd.merge(sta0,sta1,how='inner',on='time')
+
 # sta0.to_csv("E:\\datasets\\stationFlow\\line\\line2_0607",header=0,index=0,encoding='utf-8')
 
 
-#---------------------------------------------------------------------------------
-# 按天统计世界之窗的客流,并结合天气数据
-df = pd.read_csv('E:\\datasets\\stationFlow\\midResult',names=['time','name','inflow','outflow','year','month','day','hour','weekday'])
-df = df[(df['year'] ==2017)]
-df = df[df["name"] == "世界之窗"]
-df = df.groupby(by=['month','day'])['outflow'].sum()
-df = pd.DataFrame(df)
-
-dateparse = lambda dates: pd.datetime.strptime(dates, '%Y-%m-%d')
-df1 = pd.read_csv('E:\MyProject_sibat\Python\PaChong\crawle_weather\shenzhen201701-201712',parse_dates=['data'],date_parser=dateparse)
-
-df1['year'] = df1['data'].apply(lambda x:x.year)
-df1['month'] = df1['data'].apply(lambda x: x.month)
-df1['day'] = df1['data'].apply(lambda x: x.day)
-
-df2 = pd.merge(df,df1,how='inner',on=['month','day'])
-
-df2.to_csv("C:\\Users\\will\\Desktop\\weatherOutflow",header=0,index=0,columns = ['data','high','low','weather','winddirect','outflow'])
+#---------------------------------------------------------------------------------------------------------------------------------------
+## 按天统计世界之窗的客流,并结合天气数据
+# df = pd.read_csv('E:\\datasets\\stationFlow\\midResult',names=['time','name','inflow','outflow','year','month','day','hour','weekday'])
+# df = df[(df['year'] ==2017)]
+# df = df[df["name"] == "世界之窗"]
+# df = df.groupby(by=['month','day'])['outflow'].sum()
+# df = pd.DataFrame(df)
+#
+# dateparse = lambda dates: pd.datetime.strptime(dates, '%Y-%m-%d')
+# df1 = pd.read_csv('E:\MyProject_sibat\Python\PaChong\crawle_weather\shenzhen201701-201712',parse_dates=['data'],date_parser=dateparse)
+#
+# df1['year'] = df1['data'].apply(lambda x:x.year)
+# df1['month'] = df1['data'].apply(lambda x: x.month)
+# df1['day'] = df1['data'].apply(lambda x: x.day)
+#
+# df2 = pd.merge(df,df1,how='inner',on=['month','day'])
+#
+# df2.to_csv("C:\\Users\\will\\Desktop\\weatherOutflow",header=0,index=0,columns = ['data','high','low','weather','winddirect','outflow'])
