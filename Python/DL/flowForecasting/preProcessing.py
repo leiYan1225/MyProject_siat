@@ -141,30 +141,33 @@ from datetime import datetime
 #---------------------------------------------------------
 df = pd.read_csv('E:\\datasets\\stationFlow\\midResult',names=['time','name','inflow','outflow','year','month','day','hour','weekday'])
 
-## 过滤2017年的
+## 过滤2017年的数据
 df = df[(df['year'] ==2017)]
 
 
-# 工作日与休息日,分别用0，1表示
+# 工作日：label=0   休息日：label=1
 isrest = ((df['weekday'] == 6) | (df['weekday'] == 7)) # 返回bool值
 df['label'] = isrest*1
 
-# label=2表示节假日
-# holiday = [] #['06-01']
-# for h in holiday:
-#     #h = '01-01'
-#     h_month,h_day = h.split('-')
-#     h_index = ((df['month'] == int(h_month)) & (df['day'] == int(h_day)))
-#     df.loc[h_index, 'label'] = 2
+# 节假日:label=2
+holiday = ['01-01','01-02','01-03','01-27','01-28','01-29','01-30','01-31',
+           '02-01','02-02','04-03','04-04','04-05','05-01','05-02','05-03',
+           '05-28','05-29','05-30'] #2017年上半年假期
+for h in holiday:
+    #h = '01-01'
+    h_month,h_day = h.split('-')
+    h_index = ((df['month'] == int(h_month)) & (df['day'] == int(h_day)))
+    df.loc[h_index, 'label'] = 2
 
-## 过滤6、7月份工作日
+## 过滤6、7月份工作日(0)、休息日（1）
 df = df[(((df['month']==6) | (df['month']==7)) & (df['label']==0))]
-#
-#
-# ##站点
-# station = df[df["name"] == "世界之窗"]
-# # station.to_csv("E:\\datasets\\stationFlow\\bj_0607",header=0,index=0,encoding='utf-8',columns=['time','name','inflow','outflow'])
-#
+
+# df = df[(df['label']!=0)&(df['month']<7)] # 上半年非工作日
+##站点
+station = df[df["name"] == "布吉"]
+station.to_csv("E:\\datasets\\stationFlow\\bj0607_workday",header=0,index=0,encoding='utf-8',columns=['time','name','inflow','outflow'])
+
+
 # ## 线路
 # # 提取线路需要先将date转化成相同的区间
 # #读取静态数据

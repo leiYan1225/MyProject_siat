@@ -2,23 +2,24 @@
 
 import pandas as pd
 import numpy as np
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 import tensorflow as tf
 
-
-time_step = 192  # 时间步 （一天的数据量为192）
+time_step = 192 # 192  # 时间步 （一天的数据量为192） ----优化这个参数貌似对结果没什么用
 rnn_unit = 30  # hidden layer units
 batch_size = 60  # 每一批次训练多少个样例
-input_size = 30  # 输入层维度，一号线有30个站点
-output_size = 30  # 输出层维度
+input_size = 1  # 输入层维度
+output_size = 1  # 输出层维度
 lr = 0.0006  # 学习率
-FLAG = 'train'  # train or test
+FLAG = 'test'   # train or test
 
 # ——————————————————导入数据——————————————————————
-# path='E:\\datasets\\stationFlow\\line1_0607'
-path='line1_0607'
-df=pd.read_csv(path,header=None)     #读入客流数据
-data=np.array(df.iloc[:,1:31])   #获取进站数据
+f=open('E:\\datasets\\stationFlow\\sjzc_week')
+df=pd.read_csv(f,header=None,names=['time','name','inflow','outflow'])     #读入客流数据
+data=np.array(df['inflow'])   #获取进站数据
+plt.plot(data)
+plt.show()
+
 
 normalize_data = (data - np.mean(data)) / np.std(data)  # 标准化
 normalize_data = normalize_data[:, np.newaxis]  # 增加维度
@@ -29,8 +30,7 @@ for i in range(len(normalize_data) - time_step - 1):
     y = normalize_data[i + time_step]  # 用一天预测下一个5min
     data_x.append(x.tolist())
     data_y.append(y.tolist())
-data_x = np.reshape(data_x, (-1, time_step, input_size))
-data_y = np.reshape(data_y, (-1, 1, input_size))
+data_y = np.reshape(data_y, (-1, 1, 1))
 # 分训练集和测试集
 train_num = int(len(data_x)*0.8)
 train_x = data_x[0:train_num]
@@ -92,7 +92,7 @@ def train_lstm():
             end = start + batch_size
             print(i, loss_)
             if i % 100 == 0:
-                print("保存模型：", saver.save(sess, './savemodel_2/oneLine.ckpt'))
+                print("保存模型：", saver.save(sess, './savemodel_1/oneStation_weekday.ckpt'))
             if end >= len(train_x):
                 start = 0
                 end = start + batch_size
@@ -107,7 +107,7 @@ def prediction():
     saver = tf.train.Saver()
     with tf.Session() as sess:
         # 参数恢复
-        module_file = './savemodel_2/oneLine.ckpt'
+        module_file = './savemodel_1/oneStation_weekday.ckpt'
         saver.restore(sess, module_file)
         # 取测试样本,shape=[test_batch,time_step,input_size]
         test_pred = sess.run(pred, feed_dict={X: test_x})
@@ -120,31 +120,30 @@ def prediction():
         # print(test_pred)
         # print(test_y)
 
-        # 均方误差(Mean Square Error)
-        # print("MSE")
+        # Mean Square Error
+        # print("均方误差(MSE)：")
         # mse = np.mean(np.square((test_pred- test_y)))
-        # print("mse")
-        # 平均绝对误差(Mean Absolute Error)
-        print("MAE")
+        # print(mse)
+        # Mean Absolute Error
+        print("平均绝对误差(MAE):")
         mae = np.mean(np.abs(test_pred - test_y))
         print(mae)
-        # 均方根误差(Root Mean Square Error)
-        print("RMSE")
+        # Root Mean Square Error
+        print("均方根误差(RMSE):")
         rmse = np.sqrt(np.mean(np.square(test_pred-test_y)))
         print(rmse)
-        # 相对百分误差(mean absolute percentage error)
-        print("MAPE")
+        # mean absolute percentage error
+        print("相对百分误差(MAPE):")
         mape = np.mean(np.abs(test_pred - test_y)/test_y)
         print(mape)
 
-
         # 以折线图表示结果
-        # plt.figure()
-        # plt.plot(range(len(test_y)), test_y, 'r-', label='real')
-        # plt.plot(range(len(test_pred)), (test_pred), 'b-', label='pred')
-        # plt.legend(loc=0)
-        # plt.title('prediction')
-        # plt.savefig('prediction.jpg', dpi=1000, bbox_inches='tight')
+        plt.figure()
+        plt.plot(range(len(test_y)), test_y, 'r-', label='real')
+        plt.plot(range(len(test_pred)), (test_pred), 'b-', label='pred')
+        plt.legend(loc=0)
+        plt.title('prediction')
+        plt.savefig('prediction_week.jpg', dpi=1000, bbox_inches='tight')
 
 
 if __name__ == '__main__':

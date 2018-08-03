@@ -5,20 +5,20 @@ import numpy as np
 import matplotlib.pyplot as plt
 import tensorflow as tf
 
-time_step = 192  # 时间步 （一天的数据量为192）
-rnn_unit = 30  # hidden layer units
-batch_size = 60  # 每一批次训练多少个样例
+time_step = 192*5 # 192  # 时间步 （一天的数据量为192） ----优化这个参数貌似对结果没什么用
+rnn_unit = 50  # 30  # hidden layer units
+batch_size = 60  # 60   # 每一批次训练多少个样例
 input_size = 1  # 输入层维度
 output_size = 1  # 输出层维度
 lr = 0.0006  # 学习率
-FLAG = 'test'  # train or test
+FLAG = 'train'   # train or test
 
 # ——————————————————导入数据——————————————————————
-f=open('E:\\datasets\\stationFlow\\sjzc0607_workday')
+f=open('E:\\datasets\\stationFlow\\bj0607_workday')
 df=pd.read_csv(f,header=None,names=['time','name','inflow','outflow'])     #读入客流数据
 data=np.array(df['inflow'])   #获取进站数据
-plt.plot(data)
-plt.show()
+# plt.plot(data)
+# plt.show()
 
 
 normalize_data = (data - np.mean(data)) / np.std(data)  # 标准化
@@ -32,13 +32,40 @@ for i in range(len(normalize_data) - time_step - 1):
     data_y.append(y.tolist())
 data_y = np.reshape(data_y, (-1, 1, 1))
 # 分训练集和测试集
-train_num = 6000
+train_num = int(len(data_x)*0.8)
 train_x = data_x[0:train_num]
 train_y = data_y[0:train_num]
 # test_x = data_x[1000:2000]
 # test_y = data_y[1000:2000]
 test_x = data_x[train_num:]
 test_y = data_y[train_num:]
+
+
+# -----------------------
+# 换一个站点
+# f=open('E:\\datasets\\stationFlow\\bj0607_workday')
+# df=pd.read_csv(f,header=None,names=['time','name','inflow','outflow'])     #读入客流数据
+# data=np.array(df['inflow'])   #获取进站数据
+# plt.plot(data)
+# plt.savefig('bj_row.jpg', dpi=1000, bbox_inches='tight')
+# # plt.show()
+#
+#
+# normalize_data = (data - np.mean(data)) / np.std(data)  # 标准化
+# normalize_data = normalize_data[:, np.newaxis]  # 增加维度
+#
+# data_x, data_y = [], []
+# for i in range(len(normalize_data) - time_step - 1):
+#     x = normalize_data[i:i + time_step]
+#     y = normalize_data[i + time_step]  # 用一天预测下一个5min
+#     data_x.append(x.tolist())
+#     data_y.append(y.tolist())
+# data_y = np.reshape(data_y, (-1, 1, 1))
+# test_x = data_x[:192*10]
+# test_y = data_y[:192*10]
+
+
+
 
 # —————————————————定义神经网络变量————————————————
 X = tf.placeholder(tf.float32, [None, time_step, input_size])
@@ -76,7 +103,7 @@ def lstm(batch):
 def train_lstm():
     global batch_size
     pred, _ = lstm(batch_size)
-    print('train pred', pred.get_shape())
+    # print('train pred', pred.get_shape())
     # 损失函数
     loss = tf.reduce_mean(tf.square(tf.reshape(pred, [-1, 1]) - tf.reshape(Y, [-1, 1])))
     train_op = tf.train.AdamOptimizer(lr).minimize(loss)
@@ -92,10 +119,12 @@ def train_lstm():
             end = start + batch_size
             print(i, loss_)
             if i % 100 == 0:
-                print("保存模型：", saver.save(sess, './savemodel_1/bitcoin.ckpt'))
+                print("保存模型：", saver.save(sess, './savemodel_1/bj.ckpt'))
             if end >= len(train_x):
                 start = 0
                 end = start + batch_size
+    writer = tf.summary.FileWriter("./nn_log", sess.graph)
+    writer.close()
 
                 # ————————————————预测模型————————————————————
 
@@ -107,7 +136,7 @@ def prediction():
     saver = tf.train.Saver()
     with tf.Session() as sess:
         # 参数恢复
-        module_file = './savemodel_1/bitcoin.ckpt'
+        module_file = './savemodel_1/bj.ckpt'
         saver.restore(sess, module_file)
         # 取测试样本,shape=[test_batch,time_step,input_size]
         test_pred = sess.run(pred, feed_dict={X: test_x})
@@ -121,9 +150,9 @@ def prediction():
         # print(test_y)
 
         # Mean Square Error
-        print("均方误差(MSE)：")
-        mse = np.mean(np.square((test_pred- test_y)))
-        print(mse)
+        # print("均方误差(MSE)：")
+        # mse = np.mean(np.square((test_pred- test_y)))
+        # print(mse)
         # Mean Absolute Error
         print("平均绝对误差(MAE):")
         mae = np.mean(np.abs(test_pred - test_y))
@@ -137,14 +166,14 @@ def prediction():
         mape = np.mean(np.abs(test_pred - test_y)/test_y)
         print(mape)
 
-
         # 以折线图表示结果
         plt.figure()
         plt.plot(range(len(test_y)), test_y, 'r-', label='real')
         plt.plot(range(len(test_pred)), (test_pred), 'b-', label='pred')
         plt.legend(loc=0)
-        plt.title('prediction')
-        plt.savefig('prediction.jpg', dpi=1000, bbox_inches='tight')
+        plt.title('buji station prediction')
+        plt.show()
+        # plt.savefig('bj.jpg', dpi=1000, bbox_inches='tight')
 
 
 if __name__ == '__main__':

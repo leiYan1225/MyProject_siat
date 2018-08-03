@@ -43,7 +43,7 @@ def afterTraverse(root): # 后序
 
 
 def findTree(preList, midList, afterList):# 已知前、中序遍历，求后序遍历
-    if len(preList) == 0:
+    if (len(preList)|len(midList)) == 0:
         return
     if len(preList) == 1:
         afterList.append(preList[0])
@@ -57,17 +57,19 @@ def findTree(preList, midList, afterList):# 已知前、中序遍历，求后序
 
 
 if __name__ == '__main__':
-    root = Node('D', Node('B', Node('A'), Node('C')), Node('E', right=Node('G', Node('F'))))
-    print('前序遍历：')
-    preTraverse(root)
-    print('中序遍历：')
-    midTraverse(root)
-    print('后序遍历：')
-    afterTraverse(root)
+    # root = Node('D', Node('B', Node('A'), Node('C')), Node('E', right=Node('G', Node('F'))))
+    # print('前序遍历：')
+    # preTraverse(root)
+    # print('中序遍历：')
+    # midTraverse(root)
+    # print('后序遍历：')
+    # afterTraverse(root)
 
     print('已知前，中序遍历求后续遍历')
-    preList = list('DBACEGF')
-    midList = list('ABCDEFG')
+    # preList = list('DBACEGF')
+    # midList = list('ABCDEFG')
+    preList = list('12473568')
+    midList = list('47215386')
     afterList = []
     after = findTree(preList,midList,afterList)
     print(after)
