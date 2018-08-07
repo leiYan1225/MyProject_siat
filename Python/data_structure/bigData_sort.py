@@ -10,6 +10,7 @@
 arr1 = [1,2,3,3,5,6,2,7,4,5,6,3,3,4,5,4,5,4,5,3,2,5,8,7]  #假设有10亿条...
 
 
+# 用hash_map(字典)统计出现的数字，key是元素，value是出现次数
 dic1 = {}
 for i in range(len(arr1)):
     if arr1[i] not in dic1.keys():  # 如果str不在keys中，则将str加入字典，并将对应value 设置为1
@@ -19,12 +20,19 @@ for i in range(len(arr1)):
 
 print(dic1.values())
 
+
+# 通过堆排序对统计后的次数进行排序
+
 # 堆排序
 # 大顶堆：arr[i] >= arr[2i+1] && arr[i] >= arr[2i+2]  小顶堆：arr[i] <= arr[2i+1] && arr[i] <= arr[2i+2]
 # 完全二叉树、 min 堆
 
 
-import random
+'''
+借助堆这个数据结构，找出Top K，时间复杂度为N‘logK。
+即借助堆结构，我们可以在log量级的时间内查找和调整/移动。因此，维护一个K(该题目中是10)大小的小根堆，然后遍历300万的Query，分别和根元素进行对比。
+所以，我们最终的时间复杂度是：O(n) + N' * O(logk），其中，N为1000万，N’为300万
+'''
 
 def MAX_Heapify(heap,HeapSize,root):#在堆中做结构调整使得父节点的值大于子节点
 

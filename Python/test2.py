@@ -10,42 +10,6 @@
 # print(sess.run(c))
 
 
-# import os
-# os.system("{}  {}  {}".format('我', 'B-oiu', '6'))
-
-# dict1 = {'me':1,'is':2,'working':3}
-# arr = []
-# if 'me' in dict1.keys():
-#     print('hahaha')
-#     arr.append('me')
-
-# tag_seq = ['B-ORG', 'O', 'O','B-ORG','I-ORG']
-# char_seq = ['工','作','的','地','方']
-#
-# def get_ORG_entity(tag_seq, char_seq):
-#     length = len(char_seq)
-#     ORG = []
-#     for i, (char, tag) in enumerate(zip(char_seq, tag_seq)):
-#         if tag == 'B-ORG':
-#             if 'org' in locals().keys():
-#                 ORG.append(org)
-#                 del org
-#             org = char
-#             if i+1 == length:
-#                 ORG.append(org)
-#         if tag == 'I-ORG':
-#             org += char
-#             if i+1 == length:
-#                 ORG.append(org)
-#         if tag not in ['I-ORG', 'B-ORG']:
-#             if 'org' in locals().keys():
-#                 ORG.append(org)
-#                 del org
-#             continue
-#     return ORG
-#
-# get_ORG_entity(tag_seq,char_seq)
-
 # b = []
 # a = [1,2,5,4,3,7,0]
 # for i,val in enumerate(a):
@@ -115,16 +79,51 @@ from functools import reduce
 #------------------------
 
 #-*- coding:utf-8 -*-
-def outer():
-    num =10
-    def inner():
-        nonlocal num # nonlocal关键字声明
-        print('inner-nonlocal-num',num)
-        num = 100
-        print('inner-local-num',num)
-    print('outer-local-num',num)
-    inner()
-    print('outer-inner-local-num',num)
-outer()
+# def outer():
+#     num =10
+#     def inner():
+#         nonlocal num # nonlocal关键字声明
+#         print('inner-nonlocal-num',num)
+#         num = 100
+#         print('inner-local-num',num)
+#     print('outer-local-num',num)
+#     inner()
+#     print('outer-inner-local-num',num)
+# outer()
 
 
+# -------------
+# 测试 yield 关键字
+# def fab(max):
+#     n, a, b = 0, 0, 1
+#     while n < max:
+#         yield b
+#         a, b = b, a + b
+#         n = n + 1
+# for i in fab(5):
+#     print(i)
+
+
+# -------------
+# 测试 try...except...finally
+try:
+    a = 10/0
+    print(a)
+except ZeroDivisionError as v:
+    print(v)
+finally:
+    print('finally')
+
+
+try:
+    r = 10 / int('a')
+    print('result:', r)
+except ValueError as e:
+    print('ValueError:', e)
+except ZeroDivisionError as e:
+    print('ZeroDivisionError:', e)
+else:
+    print('no error!')
+finally:
+    print('finally...')
+# print('END')
