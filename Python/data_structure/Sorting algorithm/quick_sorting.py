@@ -2,16 +2,16 @@
 
 # Refer to:https://www.cnblogs.com/eniac12/p/5329396.html
 
-numbers = [6,5,3,1,8,7,2,4]
+numbers = [2,1,9,8,7,6,5,4,3]
 n = len(numbers)
 
-def swap(arr, i, j):
-    z = arr[i]
-    arr[i] = arr[j]
-    arr[j] = z
 
 # 快速排序：
 # 选取一个数据（比如数组最后一个数）作为基准数，然后将所有比它小的放在它前面，比他大的放在它后面
+# def swap(arr, i, j):
+#     z = arr[i]
+#     arr[i] = arr[j]
+#     arr[j] = z
 # def Partition(arr, left, right):
 #     pivot = arr[right]
 #     tail = left-1
@@ -37,7 +37,7 @@ def swap(arr, i, j):
 
 # 一趟快速排序的算法是：
 # 1）设置两个变量i、j，排序开始的时候：i=0，j=N-1；
-# 2）以第一个数组元素作为关键数据，赋值给key，即key=A[0]；
+# 2）以第一个数组元素作为基准数据，赋值给key，即key=A[0]；
 # 3）从j开始向前搜索，即由后开始向前搜索(j--)，找到第一个小于key的值A[j]，将A[j]和A[i]互换；
 # 4）从i开始向后搜索，即由前开始向后搜索(i++)，找到第一个大于key的A[i]，将A[i]和A[j]互换；
 # 5）重复第3、4步，直到i=j。
@@ -47,7 +47,6 @@ def QuickSort(myList,start,end):
         i,j = start,end
         # 设置基准数
         base = myList[i]
-
         while i < j:
             # 如果列表后边的数,比基准数大或相等,则前移一位直到有比基准数小的数出现
             while (i < j) and (myList[j] >= base):
@@ -65,7 +64,6 @@ def QuickSort(myList,start,end):
         QuickSort(myList, start, i - 1)
         QuickSort(myList, j + 1, end)
     return myList
-
 
 print("Quick Sort: ")
 QuickSort(numbers,0,n-1)

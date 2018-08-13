@@ -11,7 +11,7 @@ batch_size = 60  # 60   # 每一批次训练多少个样例
 input_size = 1  # 输入层维度
 output_size = 1  # 输出层维度
 lr = 0.0006  # 学习率
-FLAG = 'train'   # train or test
+FLAG = 'test'   # train or test
 
 # ——————————————————导入数据——————————————————————
 f=open('E:\\datasets\\stationFlow\\bj0607_workday')
@@ -96,7 +96,7 @@ def lstm(batch):
     w_out = weights['out']
     b_out = biases['out']
     pred = tf.matmul(outputs[-1], w_out) + b_out  # time_step只取最后一项
-    return pred, final_states
+    return pred, final_states, outputs,w_out,b_out
 
 
 # ——————————————————训练模型——————————————————
@@ -131,7 +131,7 @@ def train_lstm():
 
 def prediction():
     global test_y
-    pred, _ = lstm(len(test_x))  # 预测时只输入[test_batch,time_step,input_size]的测试数据
+    pred, _ ,outputs,w_out,b_out = lstm(len(test_x))  # 预测时只输入[test_batch,time_step,input_size]的测试数据
     print('test pred', pred.get_shape())
     saver = tf.train.Saver()
     with tf.Session() as sess:
@@ -139,6 +139,18 @@ def prediction():
         module_file = './savemodel_1/bj.ckpt'
         saver.restore(sess, module_file)
         # 取测试样本,shape=[test_batch,time_step,input_size]
+
+        # 打印一些变量
+        # test_pred,outputs,w_out,b_out = sess.run([pred,outputs,w_out,b_out], feed_dict={X: test_x})
+        # print('outputs[-1] shape',outputs[-1].shape )
+        # print('outputs[-1]')
+        # print(outputs[-1])
+        # print('w_out sharp ', w_out.shape)
+        # print('w_out')
+        # print(w_out)
+        # print('b_out sharp ', b_out.shape)
+        # print('b_out')
+        # print(b_out)
         test_pred = sess.run(pred, feed_dict={X: test_x})
         test_pred = np.reshape(test_pred, (-1))
         test_y = np.reshape(test_y, (-1))

@@ -2,5 +2,7 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Python/dancenet" vcs="Git" />
+    <mapping directory="E:\MyProject_sibat\Python\dancenet" vcs="Git" />
   </component>
 </project>
