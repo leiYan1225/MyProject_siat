@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Subway_jar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/out/artifacts/Subway_jar/IhaveADream.jar!/" />
+      <root url="jar://$PROJECT_DIR$/out/artifacts/Subway_jar/Subway.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

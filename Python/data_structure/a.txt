@@ -1,0 +1,9 @@
+#spark-submit --master spark://hadoop-1:7077 --executor-memory 6g 
+--class cn.sibat.metro.CarFreeDay --name carFree --jars metro_common_jar/metro-common.jar --driver-java-options 
+-Djava.io.tmpdir=/home/wuying/spark_tmp metro_common_jar/metro-common.jar 
+
+#spark-submit --master yarn --deploy-mode cluster --executor-memory 6g 
+--class cn.sibat.metro.CarFreeDay --conf spark.local.dir=/home/wuying/spark_tmp --driver-java-options -Djava.io.tmpdir=/home/wuying/spark_tmp metro_common_jar/metro-common.jar
+#--files shpFile/guotuwei/行政区2017.shp,shpFile/guotuwei/行政区2017.sbx,shpFile/guotuwei/行政区2017.shx,
+shpFile/guotuwei/行政区2017.dbf,shpFile/guotuwei/行政区2017.sbn,shpFile/guotuwei/行政区2017.shp.xml \
+

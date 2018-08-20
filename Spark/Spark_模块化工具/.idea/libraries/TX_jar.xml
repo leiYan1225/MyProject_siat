@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="TX_jar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/out/artifacts/TX_jar/txTimes.jar!/" />
+      <root url="jar://$PROJECT_DIR$/out/artifacts/TX_jar/txod.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
