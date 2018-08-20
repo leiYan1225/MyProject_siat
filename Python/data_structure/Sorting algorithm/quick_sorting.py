@@ -2,9 +2,6 @@
 
 # Refer to:https://www.cnblogs.com/eniac12/p/5329396.html
 
-numbers = [2,1,9,8,7,6,5,4,3]
-n = len(numbers)
-
 
 # 快速排序：
 # 选取一个数据（比如数组最后一个数）作为基准数，然后将所有比它小的放在它前面，比他大的放在它后面
@@ -51,7 +48,7 @@ def QuickSort(myList,start,end):
             # 如果列表后边的数,比基准数大或相等,则前移一位直到有比基准数小的数出现
             while (i < j) and (myList[j] >= base):
                 j = j - 1
-            # 如找到,则把第j个元素赋值给第个元素i,此时表中i,j元素相等
+            # 如找到,则把第j个元素赋值给第i个元素,此时表中i,j元素相等
             myList[i] = myList[j]
             # 同样的方式比较前半区
             while (i < j) and (myList[i] <= base):
@@ -65,6 +62,8 @@ def QuickSort(myList,start,end):
         QuickSort(myList, j + 1, end)
     return myList
 
+numbers = [6,5,3,7,2,8,4]
+n = len(numbers)
 print("Quick Sort: ")
 QuickSort(numbers,0,n-1)
 print(numbers)
