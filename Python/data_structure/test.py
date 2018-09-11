@@ -1,24 +1,3 @@
-#
-#
-# def testFun():
-#     temp = [lambda x:i*x for i in range(4)]
-#     return temp
-#
-# for everyLambda in testFun():
-#     print(everyLambda(2))
-#
-# def adder(x):
-#     def wrapper(y):
-#         return x + y**2
-#     return wrapper
-#
-# adder5 = adder(5)
-# # 输出 15
-# print(adder5(10))
-# # 输出 11
-# adder5(6)
-#
-#
 # try:
 #     a = input()
 # except IOError:
@@ -56,3 +35,15 @@ def recursive_back(n):
 print(recursive_mix(5))
 recursive_conversion(23)
 # recursive_back(1234)
+
+## 堆栈实现字符串逆序
+
+def func(str):
+    lis = list(str)
+    result = ''
+    while lis:
+        result+=result.pop()
+    return result
+
+
+

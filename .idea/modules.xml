@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://E:/ChenMengLi/.idea/ChenMengLi.iml" filepath="E:/ChenMengLi/.idea/ChenMengLi.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/MyProject_sibat.iml" filepath="$PROJECT_DIR$/.idea/MyProject_sibat.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Python/dancenet/.idea/dancenet.iml" filepath="$PROJECT_DIR$/Python/dancenet/.idea/dancenet.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/MyProject_siat.iml" filepath="$PROJECT_DIR$/.idea/MyProject_siat.iml" />
     </modules>
   </component>
 </project>
