@@ -69,19 +69,15 @@ def withoutRep(s):
 
 
 def withoutRep1(s):
-    if s is None or len(s) < 1:
-        return 0
-    length = len(s)
-    res = [0 for i in range(length)]
-    res[0] = 1
-    for i in range(1, length):
-        search_str = s[i - res[i - 1]:i][::-1]
-        if s[i] in search_str:
-            res[i] = search_str.index(s[i]) + 1
-        else:
-            res[i] = res[i - 1] + 1
-
-    return max(res)
+    temp = 0
+    d = {}
+    start = 0
+    for i in range(len(s)):
+        if s[i] in d and start <= d[s[i]]:
+            start = d[s[i]] + 1
+        temp = max(i - start + 1, temp)
+        d[s[i]] = i
+    return temp
 
 def withoutRep2(s):
     prev = 0
@@ -100,4 +96,4 @@ def withoutRep2(s):
         sub = ''
     return prev
 
-print(withoutRep2('bbbbb'))
+print(withoutRep1('pwwkew'))
