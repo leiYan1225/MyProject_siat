@@ -25,8 +25,8 @@ def name2id(table):
 
 
 if __name__ == '__main__':
-    path_station = "F://MyProject_sibat//Python//replaceStationName//datasets//station.csv"
-    path_file = "F://MyProject_sibat//Python//replaceStationName//datasets//test.xlsx"
+    path_station = "F://MyProject_siat//Python//replaceStationName//datasets//station.csv"
+    path_file = "F://MyProject_siat//Python//replaceStationName//datasets//test.xlsx"
 
     wb = xlrd.open_workbook(path_file)
     dict = csv2dict(path_station)
