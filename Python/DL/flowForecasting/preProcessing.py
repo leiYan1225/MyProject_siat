@@ -200,7 +200,7 @@ for i in range(1,len(name)):
 # df = pd.DataFrame(df)
 #
 # dateparse = lambda dates: pd.datetime.strptime(dates, '%Y-%m-%d')
-# df1 = pd.read_csv('E:\MyProject_sibat\Python\PaChong\crawle_weather\shenzhen201701-201712',parse_dates=['data'],date_parser=dateparse)
+# df1 = pd.read_csv('E:\MyProject_siat\Python\PaChong\crawle_weather\shenzhen201701-201712',parse_dates=['data'],date_parser=dateparse)
 #
 # df1['year'] = df1['data'].apply(lambda x:x.year)
 # df1['month'] = df1['data'].apply(lambda x: x.month)
