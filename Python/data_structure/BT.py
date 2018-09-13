@@ -20,26 +20,26 @@ class Node:
         self.left = left
         self.right = right
 
-def preTraverse(root): # 前序
-    if  root == None:
+def preTraverse(tree): # 前序
+    if  tree == None:
         return
-    print(root.value)
-    preTraverse(root.left)
-    preTraverse(root.right)
+    print(tree.value)
+    preTraverse(tree.left)
+    preTraverse(tree.right)
 
-def midTraverse(root): # 中序
-    if root ==None:
+def midTraverse(tree): # 中序
+    if tree == None:
         return
-    midTraverse(root.left)
-    print(root.value)
-    midTraverse(root.right)
+    midTraverse(tree.left)
+    print(tree.value)
+    midTraverse(tree.right)
 
-def afterTraverse(root): # 后序
-    if root ==None:
+def afterTraverse(tree): # 后序
+    if tree == None:
         return
-    afterTraverse(root.left)
-    afterTraverse(root.right)
-    print(root.value)
+    afterTraverse(tree.left)
+    afterTraverse(tree.right)
+    print(tree.value)
 
 
 def findTree(preList, midList, afterList):# 已知前、中序遍历，求后序遍历
@@ -57,15 +57,15 @@ def findTree(preList, midList, afterList):# 已知前、中序遍历，求后序
 
 
 if __name__ == '__main__':
-    # root = Node('D', Node('B', Node('A'), Node('C')), Node('E', right=Node('G', Node('F'))))
-    # print('前序遍历：')
-    # preTraverse(root)
-    # print('中序遍历：')
-    # midTraverse(root)
-    # print('后序遍历：')
-    # afterTraverse(root)
+    tree = Node('D', Node('B', Node('A'), Node('C')), Node('E', right=Node('G', Node('F'))))
+    print('前序遍历：')
+    preTraverse(tree)
+    print('中序遍历：')
+    midTraverse(tree)
+    print('后序遍历：')
+    afterTraverse(tree)
 
-    print('已知前，中序遍历求后续遍历')
+    print('已知前，中序遍历求后续遍历:')
     # preList = list('DBACEGF')
     # midList = list('ABCDEFG')
     preList = list('12473568')

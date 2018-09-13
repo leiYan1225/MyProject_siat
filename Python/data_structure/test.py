@@ -1,32 +1,9 @@
-#
-#
-# def testFun():
-#     temp = [lambda x:i*x for i in range(4)]
-#     return temp
-#
-# for everyLambda in testFun():
-#     print(everyLambda(2))
-#
-# def adder(x):
-#     def wrapper(y):
-#         return x + y**2
-#     return wrapper
-#
-# adder5 = adder(5)
-# # 输出 15
-# print(adder5(10))
-# # 输出 11
-# adder5(6)
-#
-#
 # try:
 #     a = input()
 # except IOError:
 #     print("error:缺少输入")
 # else:
 #     print(a)
-
-
 
 # 递归求N!
 def recursive_mix(n):
@@ -53,6 +30,74 @@ def recursive_back(n):
     recursive_back(int(n / 10))
 
 
-print(recursive_mix(5))
-recursive_conversion(23)
+# print(recursive_mix(5))
+# recursive_conversion(23)
 # recursive_back(1234)
+
+## 堆栈实现字符串逆序
+
+def func(str):
+    lis = list(str)
+    result = ''
+    while lis:
+        result+=result.pop()
+    return result
+
+
+def towSum(num, target):
+    d = {}
+    for i, val in enumerate(num):
+        if target - val in d:
+            return [d[target - val], i]
+        d[val] = i
+
+
+# print(towSum([4,2,1,6,7],5))
+
+def withoutRep(s):
+    my = ''
+    maxlen = 0
+    for i in range(len(s)):
+        if s[i] not in my:
+            my = my+s[i]
+        else:
+            maxlen = max(maxlen,len(my))
+            left = s.index(s[i])+1
+            right = i
+            my = s[left:right+1]
+    return maxlen
+
+
+def withoutRep1(s):
+    if s is None or len(s) < 1:
+        return 0
+    length = len(s)
+    res = [0 for i in range(length)]
+    res[0] = 1
+    for i in range(1, length):
+        search_str = s[i - res[i - 1]:i][::-1]
+        if s[i] in search_str:
+            res[i] = search_str.index(s[i]) + 1
+        else:
+            res[i] = res[i - 1] + 1
+
+    return max(res)
+
+def withoutRep2(s):
+    prev = 0
+    ans = 0
+    sub = ''
+    for i in range(len(s)):
+        if len(s) - i <= prev:
+            break
+        while i < len(s) and s[i] not in sub:
+            ans += 1
+            sub += s[i]
+            i += 1
+        if prev < ans:
+            prev = ans
+        ans = 0
+        sub = ''
+    return prev
+
+print(withoutRep2('bbbbb'))
