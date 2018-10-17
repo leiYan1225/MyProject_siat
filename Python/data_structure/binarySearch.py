@@ -16,8 +16,8 @@ def bs(arr,val):
         else:
             left = mid+1
     return -1  # 如果没找到，返回-1
-arr = [1,2,3,4,6,7,8,9]
-print(bs(arr,4))
+# arr = [1,2,3,4,6,7,8,9]
+# print(bs(arr,4))
 
 # 变种1：在arr中找到第一个大于等于val的值
 def bs1(arr,val):
@@ -31,7 +31,7 @@ def bs1(arr,val):
             left = mid+1
     return arr[left]        ## 注意是left
 arr = [1,2,3,4,6,7,8,9,10]
-print(bs1(arr,4))
+print(bs1(arr,5))
 
 # 变种2：在arr中找到最后一个小于val的值
 def bs1(arr,val):
@@ -44,5 +44,5 @@ def bs1(arr,val):
         else:
             right = mid - 1
     return arr[right]   ## 注意是right
-arr = [1,2,3,5,6,7,8,9,10]
-print(bs1(arr,7))
+# arr = [1,2,3,5,6,7,8,9,10]
+# print(bs1(arr,7))

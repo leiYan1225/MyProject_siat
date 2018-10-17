@@ -66,5 +66,7 @@ b = "ABCDABD"
 # print(naive_match(a,b))
 kmpMatch(a,b)
 
+print(PMT('ababcabcacbab'))
+
 
 

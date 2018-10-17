@@ -38,32 +38,58 @@
 # 3）从j开始向前搜索，即由后开始向前搜索(j--)，找到第一个小于key的值A[j]，将A[j]和A[i]互换；
 # 4）从i开始向后搜索，即由前开始向后搜索(i++)，找到第一个大于key的A[i]，将A[i]和A[j]互换；
 # 5）重复第3、4步，直到i=j。
-def QuickSort(myList,start,end):
-    # 判断low是否小于high,如果为false,直接返回
-    if start < end:
-        i,j = start,end
-        # 设置基准数
-        base = myList[i]
-        while i < j:
-            # 如果列表后边的数,比基准数大或相等,则前移一位直到有比基准数小的数出现
-            while (i < j) and (myList[j] >= base):
-                j = j - 1
-            # 如找到,则把第j个元素赋值给第i个元素,此时表中i,j元素相等
-            myList[i] = myList[j]
-            # 同样的方式比较前半区
-            while (i < j) and (myList[i] <= base):
-                i = i + 1
-            myList[j] = myList[i]
-        # 做完第一轮比较之后,列表被分成了两个半区,并且i=j,需要将这个数设置回base
-        myList[i] = base
+# def QuickSort(myList,start,end):
+#     # 判断low是否小于high,如果为false,直接返回
+#     if start < end:
+#         i,j = start,end
+#         # 设置基准数
+#         base = myList[i]
+#         while i < j:
+#             # 如果列表后边的数,比基准数大或相等,则前移一位直到有比基准数小的数出现
+#             while (i < j) and (myList[j] >= base):
+#                 j = j - 1
+#             # 如找到,则把第j个元素赋值给第i个元素,此时表中i,j元素相等
+#             myList[i] = myList[j]
+#             # 同样的方式比较前半区
+#             while (i < j) and (myList[i] <= base):
+#                 i = i + 1
+#             myList[j] = myList[i]
+#         # 做完第一轮比较之后,列表被分成了两个半区,并且i=j,需要将这个数设置回base
+#         myList[i] = base
+#
+#         # 递归前后半区
+#         QuickSort(myList, start, i - 1)
+#         QuickSort(myList, j + 1, end)
+#     return myList
+#
+# numbers = [6,5,3,7,2,8,4]
+# n = len(numbers)
+# print("Quick Sort: ")
+# QuickSort(numbers,0,n-1)
+# print(numbers)
 
-        # 递归前后半区
-        QuickSort(myList, start, i - 1)
-        QuickSort(myList, j + 1, end)
-    return myList
+def QuickSort(arr, firstIndex, lastIndex):
+    if firstIndex < lastIndex:
+        divIndex = Partition(arr, firstIndex, lastIndex)
 
-numbers = [6,5,3,7,2,8,4]
-n = len(numbers)
-print("Quick Sort: ")
-QuickSort(numbers,0,n-1)
-print(numbers)
+        QuickSort(arr, firstIndex, divIndex)
+        QuickSort(arr, divIndex + 1, lastIndex)
+    else:
+        return
+
+
+def Partition(arr, firstIndex, lastIndex):
+    i = firstIndex - 1
+    for j in range(firstIndex, lastIndex):
+        if arr[j] <= arr[lastIndex]:
+            i = i + 1
+            arr[i], arr[j] = arr[j], arr[i]
+    arr[i + 1], arr[lastIndex] = arr[lastIndex], arr[i + 1]
+    return i
+
+
+arr = [1, 4, 7, 5, 3, 8, 2, 0]
+
+print("initial array:\n", arr)
+QuickSort(arr, 0, len(arr) - 1)
+print("result array:\n", arr)
