@@ -97,3 +97,38 @@ def withoutRep2(s):
     return prev
 
 print(withoutRep1('pwwkew'))
+
+
+'''
+滑动窗口
+维护一个dict,逐一将元素添加进去
+若存在重复元素a，则更新dict,并将left设为dic[a]+1
+'''
+def withoutRept(s):
+    dic = {}  ## 用一个dic 来存储
+    left = 0
+    maxlen = 0
+    for i in range(len(s)):
+        if s[i] in dic and left <= dic[s[i]]: # 如果出现重复元素a,后面这个and 貌似也很重要。。。
+            left = dic[s[i]] +1  # 中
+        maxlen = max(maxlen,i-left+1)
+        dic[s[i]] = i
+    return maxlen
+
+
+# print(withoutRep1('abba'))
+
+s = 'aaabbcccaa'
+def tranStr(s):
+    st = ''
+    st1 = ''
+    for i in range(len(s)-1):
+        st1 += s[i]
+        if s[i+1] not in st1:
+            a = len(st1)
+            st = st + str(a)+s[i-1]
+            st1 = ''
+    return st
+
+
+print(tranStr(s))
